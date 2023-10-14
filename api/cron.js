@@ -23,6 +23,6 @@ async function testsend(newtext) {
 
 export default  async function handler(req, res) {
     const price=await getdata();
-    const newcron=testsend(price)
+    const newcron=await testsend(price)
     res.status(200).end('Hello Cron!');
   }
