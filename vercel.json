@@ -5,11 +5,7 @@
     },
     {
       "path": "/api/cron",
-      "schedule": "5 6 * * *"
-    },
-    {
-      "path": "/api/cron",
-      "schedule": "0 9 * * *"
+      "schedule": "5 8 * * *"
     }
     ]
   }
