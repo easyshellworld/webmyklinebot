@@ -10,7 +10,7 @@ exports.getdata=async function(){
 
 
 async function getcoin(){
-    const coinnames=['BTC', 'ETH', 'matic665', 'APT530', 'tron', 'solana', 'ARB248','APE613','OP450','XLM','UNI226']
+    const coinnames=['BTC', 'ETH', 'matic665', 'APT530', 'tron','APE613','OP450','XLM','UNI226']
     let coinpricetext=''
     for(let i=0;i<coinnames.length;i++){
       const res=await axios({
