@@ -1,10 +1,14 @@
 const axios = require('axios');
 
 exports.getdata=async function(){
-   const coinprice=await getcoin()
-   const stockdata =await getstock();
-   const foxdata=await getfox();
-   return stockdata+"\n"+coinprice+'\n'+foxdata;
+  const [coinprice,stockdata,foxdata] = await Promise.all(
+    [
+     getcoin(),
+     getstock(),
+     getfox()
+    ]);  
+
+  return stockdata+"\n"+coinprice+'\n'+foxdata; 
    
 }
 
@@ -100,28 +104,31 @@ function gettoday(coinname){
         ]
       } 
     ]
-    let foxtext=''
-    for(let i=0;i<foxarr.length;i++){
-       const res=await axios({
+  
+
+    const foxPromises=foxarr.map(fox=>{
+        return axios({
           method: 'get',
-          url: foxurl+foxarr[i].url,
-          
+          url: foxurl+fox.url,
           headers: {
             'Content-Type': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0",
-          } 
-        
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0',
+        }}).then((res) => {
+          const resjosn=res.data.rates
+          let str=''
+          for(let j=0;j<fox['arr'].length;j++){
+            str+=fox['arr'][j].name+':'+resjosn[fox['arr'][j].val]+','
+         }
+          
+          return str;
       })
-      const resjosn=res.data.rates
-     // console.log(resjosn)
-      for(let j=0;j<foxarr[i]['arr'].length;j++){
-         const str=foxarr[i]['arr'][j].name+':'+resjosn[foxarr[i]['arr'][j].val]+','
-         foxtext=foxtext+str
-      }
-    }
-   // console.log(foxtext)
-    return foxtext
-  }
+
+    })
+
+    return Promise.all(foxPromises).then((foxprices) => {
+      return foxprices.join(''); // Join the prices into a single string
+  });
+}
 
 
   
