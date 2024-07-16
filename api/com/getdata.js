@@ -38,7 +38,7 @@ exports.getdata=async function(){
 } */
 
 async function getcoin() {
-  const coinnames = ['BTC', 'ETH', 'BCH','matic665', 'APT530', 'tron', 'solana', 'ARB248','APE613','OP450','XLM','UNI226'];
+  const coinnames = ['BTC', 'ETH', 'BCH','matic665', 'APT530', 'tron', 'solana','XLM','UNI226'];
   const coinPromises = coinnames.map((coinName) => {
       return axios({
           method: 'get',
