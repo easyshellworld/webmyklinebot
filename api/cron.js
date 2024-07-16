@@ -49,8 +49,7 @@ async function getAccessToken(appId, appSecret) {
       );  
         
       // 假设响应的数据结构中有一个tenant_access_token字段  
-      console.log(response.data)
-      console.log(appId+'__'+ appSecret)
+   
       return response.data.tenant_access_token;  
   } catch (error) {  
      console.error('Failed to get access token:', error);  
