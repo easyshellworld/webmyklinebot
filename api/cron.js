@@ -1,5 +1,7 @@
 const  {getdata} = require('./com/getdata.js');
 const axios = require('axios');
+require("dotenv").config();
+
 
 async function sendMessageToFeishu(accessToken, message, chatId) {  
   try {  
